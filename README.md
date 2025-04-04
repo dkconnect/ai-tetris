@@ -23,7 +23,7 @@
 
 ## Introduction
 
-Welcome to **The Tetris AI**, a beautifully redesigned Tetris game that combines classic gameplay with modern aesthetics and AI-powered intelligence! Watch as the AI plays Tetris with precision, or take control yourself in this visually stunning experience. With vibrant colors, gradient effects, and a sleek interface, this project brings Tetris into the 21st century. 🎉
+Welcome to **The Tetris AI**, a beautifully redesigned Tetris game that combines classic gameplay with modern aesthetics and AI-powered intelligence! Watch as the AI plays Tetris with precision, or take control yourself in this visually stunning experience. With vibrant colors, gradient effects, and a sleek interface, this project brings Tetris into the 21st century. 
 
 Built using JavaScript, HTML5 Canvas, and CSS, this project features a responsive design, enhanced piece rendering, and a clean landing page to welcome players. Whether you're a gamer, a developer, or an AI enthusiast, The Tetris AI offers something for everyone.
 
@@ -34,7 +34,7 @@ Built using JavaScript, HTML5 Canvas, and CSS, this project features a responsiv
 - **AI-Powered Gameplay** : Let the AI take control and play Tetris with optimal strategies.
 - **Gorgeous Design** : Vibrant colors, gradient effects, borders, and shadows make the pieces pop.
 - **Responsive Layout** : Play on any device, from desktops to mobile phones.
-- **Modern Landing Page** 🖼: A sleek landing page with a centered logo, start button, and GitHub link.
+- **Modern Landing Page** : A sleek landing page with a centered logo, start button, and GitHub link.
 - **Enhanced Pieces** : Pieces feature gradients, borders, and shadows for a 3D, floating effect.
 - **Smooth Animations** : Fluid piece movements and rotations for an immersive experience.
 - **Source Code Access** : Explore the code and contribute via the GitHub repository.
