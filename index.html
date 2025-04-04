@@ -1,30 +1,38 @@
 <!DOCTYPE html>
-<html>
-<head lang="en">
+<html lang="en">
+<head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Tetris AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <link href="style/main.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <div id="fb-root"></div>
 <div class="container">
-    <h1 class="header">The Tetris AI</h1>
+    <div class="logo-container">
+        <img src="images/tetris-ai-logo.png" alt="The Tetris AI Logo" class="header-logo">
+    </div>
 
     <div class="game-container">
         <canvas width="200px" height="400px" id="grid-canvas" class="grid"></canvas>
         <div class="controls-container">
-            <div id="score-container" class="score-container">0</div>
-            <div id="next-container" class="next-container">
-                <canvas id="next-canvas" class="next-canvas" width="80px" height="80px"></canvas>
+            <div class="info-box">
+                <div id="score-container" class="score-container">0</div>
             </div>
-            <a id="ai-button" class="start-ai-button">Play AI</a>
-            <a id="reset-button" class="reset-button">Reset</a>
+            <div class="info-box">
+                <div id="next-container" class="next-container">
+                    <canvas id="next-canvas" class="next-canvas" width="80px" height="80px"></canvas>
+                </div>
+            </div>
+            <a id="ai-button" class="action-button start-ai-button">Play AI</a>
+            <a id="reset-button" class="action-button reset-button">Reset</a>
         </div>
     </div>
     <hr>
     <div class="footer">
-        <p align=center>Created by <a href="hhttps://github.com/dkconnect" target="#">Dibyanshu</a>.</p>
-        <p align=center>Find the Source Code <a href="https://github.com/dkconnect/ai-tetris" target="#">here</a></p>
+        <p align="center">Created by <a href="https://github.com/dkconnect" target="_blank">Dibyanshu</a>.</p>
+        <p align="center">Find the Source Code <a href="https://github.com/dkconnect/ai-tetris" target="_blank">here</a></p>
     </div>
 </div>
 
