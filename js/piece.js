@@ -13,11 +13,11 @@ Piece.fromIndex = function(index) {
     const COLORS = {
         O: 0xFFEB3B, // Yellow (matches the site's text color)
         J: 0x00D4FF, // Cyan (matches the site's link color)
-        L: 0xAA00AA, // Magenta (same as before, fits the theme)
+        L: 0xAA00AA, // Magenta (fits the theme)
         Z: 0xFF6F61, // Coral (matches the button gradient)
-        S: 0x00AA00, // Green (brighter green than before)
+        S: 0x00AA00, // Green
         T: 0xFF3D00, // Orange (matches the button gradient)
-        I: 0xFFFFFF  // White (for a clean, bright look)
+        I: 0x00FF00  // Lime Green (replaced white for a vibrant look)
     };
 
     switch (index) {
