@@ -33,6 +33,89 @@ hr {
     margin: 20px 0;
 }
 
+/* Landing Page Styles */
+.landing-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    min-height: 100vh;
+}
+
+.landing-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    padding: 20px;
+    text-align: center;
+    width: 100%;
+    max-width: 500px;
+}
+
+.logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header-logo {
+    max-width: 250px;
+    height: auto;
+    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.action-button {
+    display: inline-block;
+    width: 100%;
+    max-width: 250px;
+    padding: 15px;
+    background: linear-gradient(135deg, #ff6f61 0%, #ff3d00 100%);
+    color: #ffffff;
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.1s ease, background 0.3s ease;
+}
+
+.action-button:hover {
+    background: linear-gradient(135deg, #ff3d00 0%, #ff6f61 100%);
+    transform: translateY(-2px);
+}
+
+.action-button:active {
+    transform: translateY(1px);
+}
+
+.github-link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.github-icon {
+    font-size: 3rem; /* Increased size */
+    color: #ffffff;
+    transition: color 0.3s ease;
+}
+
+.github-link a:hover .github-icon {
+    color: #ffeb3b;
+}
+
+/* Game Page Styles */
 .container {
     width: 90%;
     max-width: 400px;
@@ -42,17 +125,6 @@ hr {
     border-radius: 15px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
     backdrop-filter: blur(10px);
-}
-
-.logo-container {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.header-logo {
-    max-width: 250px;
-    height: auto;
-    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
 }
 
 .game-container {
@@ -113,31 +185,6 @@ hr {
     border-radius: 5px;
 }
 
-.action-button {
-    display: inline-block;
-    width: 100%;
-    max-width: 200px;
-    padding: 12px;
-    background: linear-gradient(135deg, #ff6f61 0%, #ff3d00 100%);
-    color: #ffffff;
-    font-size: 1.1rem;
-    font-weight: 600;
-    text-align: center;
-    text-decoration: none;
-    border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    transition: transform 0.1s ease, background 0.3s ease;
-}
-
-.action-button:hover {
-    background: linear-gradient(135deg, #ff3d00 0%, #ff6f61 100%);
-    transform: translateY(-2px);
-}
-
-.action-button:active {
-    transform: translateY(1px);
-}
-
 .start-ai-button, .reset-button {
     margin-top: 0;
 }
@@ -167,6 +214,18 @@ hr {
 
     .controls-container {
         width: 150px;
+    }
+
+    .header-logo {
+        max-width: 300px;
+    }
+
+    .container {
+        max-width: 600px;
+    }
+
+    .landing-container {
+        max-width: 600px;
     }
 
     .header-logo {
