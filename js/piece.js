@@ -1,75 +1,88 @@
-function Piece(cells){
-    this.cells = cells;
+// Piece constructor: Represents a Tetris piece with its shape, position, and color
+function Piece(cells) {
+    this.cells = cells; // 2D array representing the piece's shape
+    this.dimension = this.cells.length; // Size of the piece (e.g., 2 for O, 3 for J, 4 for I)
+    this.row = 0; // Current row position on the grid
+    this.column = 0; // Current column position on the grid
+}
 
-    this.dimension = this.cells.length;
-    this.row = 0;
-    this.column = 0;
-};
-
-Piece.fromIndex = function(index){
+// Static method to create a piece based on an index (0 to 6 for O, J, L, Z, S, T, I)
+Piece.fromIndex = function(index) {
     var piece;
-    switch (index){
-        case 0:// O
+    // Updated colors to match the modern aesthetic of the site
+    const COLORS = {
+        O: 0xFFEB3B, // Yellow (matches the site's text color)
+        J: 0x00D4FF, // Cyan (matches the site's link color)
+        L: 0xAA00AA, // Magenta (same as before, fits the theme)
+        Z: 0xFF6F61, // Coral (matches the button gradient)
+        S: 0x00AA00, // Green (brighter green than before)
+        T: 0xFF3D00, // Orange (matches the button gradient)
+        I: 0xFFFFFF  // White (for a clean, bright look)
+    };
+
+    switch (index) {
+        case 0: // O piece (2x2 square)
             piece = new Piece([
-                [0x0000AA, 0x0000AA],
-                [0x0000AA, 0x0000AA]
+                [COLORS.O, COLORS.O],
+                [COLORS.O, COLORS.O]
             ]);
             break;
-        case 1: // J
+        case 1: // J piece (3x3)
             piece = new Piece([
-                [0xC0C0C0, 0x000000, 0x000000],
-                [0xC0C0C0, 0xC0C0C0, 0xC0C0C0],
+                [COLORS.J, 0x000000, 0x000000],
+                [COLORS.J, COLORS.J, COLORS.J],
                 [0x000000, 0x000000, 0x000000]
             ]);
             break;
-        case 2: // L
+        case 2: // L piece (3x3)
             piece = new Piece([
-                [0x000000, 0x000000, 0xAA00AA],
-                [0xAA00AA, 0xAA00AA, 0xAA00AA],
+                [0x000000, 0x000000, COLORS.L],
+                [COLORS.L, COLORS.L, COLORS.L],
                 [0x000000, 0x000000, 0x000000]
             ]);
             break;
-        case 3: // Z
+        case 3: // Z piece (3x3)
             piece = new Piece([
-                [0x00AAAA, 0x00AAAA, 0x000000],
-                [0x000000, 0x00AAAA, 0x00AAAA],
+                [COLORS.Z, COLORS.Z, 0x000000],
+                [0x000000, COLORS.Z, COLORS.Z],
                 [0x000000, 0x000000, 0x000000]
             ]);
             break;
-        case 4: // S
+        case 4: // S piece (3x3)
             piece = new Piece([
-                [0x000000, 0x00AA00, 0x00AA00],
-                [0x00AA00, 0x00AA00, 0x000000],
+                [0x000000, COLORS.S, COLORS.S],
+                [COLORS.S, COLORS.S, 0x000000],
                 [0x000000, 0x000000, 0x000000]
             ]);
             break;
-        case 5: // T
+        case 5: // T piece (3x3)
             piece = new Piece([
-                [0x000000, 0xAA5500, 0x000000],
-                [0xAA5500, 0xAA5500, 0xAA5500],
+                [0x000000, COLORS.T, 0x000000],
+                [COLORS.T, COLORS.T, COLORS.T],
                 [0x000000, 0x000000, 0x000000]
             ]);
             break;
-        case 6: // I
+        case 6: // I piece (4x4)
             piece = new Piece([
                 [0x000000, 0x000000, 0x000000, 0x000000],
-                [0xAA0000, 0xAA0000, 0xAA0000, 0xAA0000],
+                [COLORS.I, COLORS.I, COLORS.I, COLORS.I],
                 [0x000000, 0x000000, 0x000000, 0x000000],
                 [0x000000, 0x000000, 0x000000, 0x000000]
             ]);
             break;
-
     }
+    // Center the piece on the grid (assuming a 10-column grid)
     piece.row = 0;
-    piece.column = Math.floor((10 - piece.dimension) / 2); // Centralize
+    piece.column = Math.floor((10 - piece.dimension) / 2);
     return piece;
 };
 
-Piece.prototype.clone = function(){
+// Clone the piece to create a copy for testing movements or rotations
+Piece.prototype.clone = function() {
     var _cells = new Array(this.dimension);
     for (var r = 0; r < this.dimension; r++) {
         _cells[r] = new Array(this.dimension);
-        for(var c = 0; c < this.dimension; c++){
+        for (var c = 0; c < this.dimension; c++) {
             _cells[r][c] = this.cells[r][c];
         }
     }
@@ -80,13 +93,15 @@ Piece.prototype.clone = function(){
     return piece;
 };
 
-Piece.prototype.canMoveLeft = function(grid){
-    for(var r = 0; r < this.cells.length; r++){
-        for(var c = 0; c < this.cells[r].length; c++){
+// Check if the piece can move left
+Piece.prototype.canMoveLeft = function(grid) {
+    for (var r = 0; r < this.cells.length; r++) {
+        for (var c = 0; c < this.cells[r].length; c++) {
             var _r = this.row + r;
             var _c = this.column + c - 1;
-            if (this.cells[r][c] != 0){
-                if (!(_c >= 0 && grid.cells[_r][_c] == 0)){
+            if (this.cells[r][c] != 0) {
+                // Check if the new position is within bounds and not occupied
+                if (!(_c >= 0 && _r >= 0 && _r < grid.rows && grid.cells[_r][_c] == 0)) {
                     return false;
                 }
             }
@@ -95,13 +110,15 @@ Piece.prototype.canMoveLeft = function(grid){
     return true;
 };
 
-Piece.prototype.canMoveRight = function(grid){
-    for(var r = 0; r < this.cells.length; r++){
-        for(var c = 0; c < this.cells[r].length; c++){
+// Check if the piece can move right
+Piece.prototype.canMoveRight = function(grid) {
+    for (var r = 0; r < this.cells.length; r++) {
+        for (var c = 0; c < this.cells[r].length; c++) {
             var _r = this.row + r;
             var _c = this.column + c + 1;
-            if (this.cells[r][c] != 0){
-                if (!(_c >= 0 && grid.cells[_r][_c] == 0)){
+            if (this.cells[r][c] != 0) {
+                // Check if the new position is within bounds and not occupied
+                if (!(_c < grid.columns && _r >= 0 && _r < grid.rows && grid.cells[_r][_c] == 0)) {
                     return false;
                 }
             }
@@ -110,14 +127,15 @@ Piece.prototype.canMoveRight = function(grid){
     return true;
 };
 
-
-Piece.prototype.canMoveDown = function(grid){
-    for(var r = 0; r < this.cells.length; r++){
-        for(var c = 0; c < this.cells[r].length; c++){
+// Check if the piece can move down
+Piece.prototype.canMoveDown = function(grid) {
+    for (var r = 0; r < this.cells.length; r++) {
+        for (var c = 0; c < this.cells[r].length; c++) {
             var _r = this.row + r + 1;
             var _c = this.column + c;
-            if (this.cells[r][c] != 0 && _r >= 0){
-                if (!(_r < grid.rows && grid.cells[_r][_c] == 0)){
+            if (this.cells[r][c] != 0) {
+                // Check if the new position is within bounds and not occupied
+                if (!(_r < grid.rows && _c >= 0 && _c < grid.columns && grid.cells[_r][_c] == 0)) {
                     return false;
                 }
             }
@@ -126,95 +144,70 @@ Piece.prototype.canMoveDown = function(grid){
     return true;
 };
 
-Piece.prototype.moveLeft = function(grid){
-    if(!this.canMoveLeft(grid)){
+// Move the piece left if possible
+Piece.prototype.moveLeft = function(grid) {
+    if (!this.canMoveLeft(grid)) {
         return false;
     }
     this.column--;
     return true;
 };
 
-Piece.prototype.moveRight = function(grid){
-    if(!this.canMoveRight(grid)){
+// Move the piece right if possible
+Piece.prototype.moveRight = function(grid) {
+    if (!this.canMoveRight(grid)) {
         return false;
     }
     this.column++;
     return true;
 };
 
-Piece.prototype.moveDown = function(grid){
-    if(!this.canMoveDown(grid)){
+// Move the piece down if possible
+Piece.prototype.moveDown = function(grid) {
+    if (!this.canMoveDown(grid)) {
         return false;
     }
     this.row++;
     return true;
 };
 
-Piece.prototype.rotateCells = function(){
-      var _cells = new Array(this.dimension);
-      for (var r = 0; r < this.dimension; r++) {
-          _cells[r] = new Array(this.dimension);
-      }
+// Rotate the piece's cells (90 degrees clockwise)
+Piece.prototype.rotateCells = function() {
+    var _cells = new Array(this.dimension);
+    for (var r = 0; r < this.dimension; r++) {
+        _cells[r] = new Array(this.dimension);
+    }
 
-      switch (this.dimension) { // Assumed square matrix
-          case 2:
-              _cells[0][0] = this.cells[1][0];
-              _cells[0][1] = this.cells[0][0];
-              _cells[1][0] = this.cells[1][1];
-              _cells[1][1] = this.cells[0][1];
-              break;
-          case 3:
-              _cells[0][0] = this.cells[2][0];
-              _cells[0][1] = this.cells[1][0];
-              _cells[0][2] = this.cells[0][0];
-              _cells[1][0] = this.cells[2][1];
-              _cells[1][1] = this.cells[1][1];
-              _cells[1][2] = this.cells[0][1];
-              _cells[2][0] = this.cells[2][2];
-              _cells[2][1] = this.cells[1][2];
-              _cells[2][2] = this.cells[0][2];
-              break;
-          case 4:
-              _cells[0][0] = this.cells[3][0];
-              _cells[0][1] = this.cells[2][0];
-              _cells[0][2] = this.cells[1][0];
-              _cells[0][3] = this.cells[0][0];
-              _cells[1][3] = this.cells[0][1];
-              _cells[2][3] = this.cells[0][2];
-              _cells[3][3] = this.cells[0][3];
-              _cells[3][2] = this.cells[1][3];
-              _cells[3][1] = this.cells[2][3];
-              _cells[3][0] = this.cells[3][3];
-              _cells[2][0] = this.cells[3][2];
-              _cells[1][0] = this.cells[3][1];
+    // General rotation algorithm for a square matrix
+    for (var r = 0; r < this.dimension; r++) {
+        for (var c = 0; c < this.dimension; c++) {
+            _cells[c][this.dimension - 1 - r] = this.cells[r][c];
+        }
+    }
 
-              _cells[1][1] = this.cells[2][1];
-              _cells[1][2] = this.cells[1][1];
-              _cells[2][2] = this.cells[1][2];
-              _cells[2][1] = this.cells[2][2];
-              break;
-      }
-
-      this.cells = _cells;
+    this.cells = _cells;
 };
 
-Piece.prototype.computeRotateOffset = function(grid){
+// Compute the offset needed after rotation to keep the piece in a valid position
+Piece.prototype.computeRotateOffset = function(grid) {
     var _piece = this.clone();
     _piece.rotateCells();
     if (grid.valid(_piece)) {
         return { rowOffset: _piece.row - this.row, columnOffset: _piece.column - this.column };
     }
 
-    // Kicking
+    // Wall kicking: Try shifting the piece to find a valid position
     var initialRow = _piece.row;
     var initialCol = _piece.column;
 
+    // Try shifting right
     for (var i = 0; i < _piece.dimension - 1; i++) {
         _piece.column = initialCol + i;
         if (grid.valid(_piece)) {
             return { rowOffset: _piece.row - this.row, columnOffset: _piece.column - this.column };
         }
 
+        // Try shifting up
         for (var j = 0; j < _piece.dimension - 1; j++) {
             _piece.row = initialRow - j;
             if (grid.valid(_piece)) {
@@ -225,12 +218,14 @@ Piece.prototype.computeRotateOffset = function(grid){
     }
     _piece.column = initialCol;
 
+    // Try shifting left
     for (var i = 0; i < _piece.dimension - 1; i++) {
         _piece.column = initialCol - i;
         if (grid.valid(_piece)) {
             return { rowOffset: _piece.row - this.row, columnOffset: _piece.column - this.column };
         }
 
+        // Try shifting up
         for (var j = 0; j < _piece.dimension - 1; j++) {
             _piece.row = initialRow - j;
             if (grid.valid(_piece)) {
@@ -244,11 +239,24 @@ Piece.prototype.computeRotateOffset = function(grid){
     return null;
 };
 
-Piece.prototype.rotate = function(grid){
+// Rotate the piece if possible, applying the computed offset
+Piece.prototype.rotate = function(grid) {
     var offset = this.computeRotateOffset(grid);
-    if (offset != null){
-        this.rotateCells(grid);
+    if (offset != null) {
+        this.rotateCells();
         this.row += offset.rowOffset;
         this.column += offset.columnOffset;
     }
+};
+
+// Get the color of the piece (returns the first non-zero color value)
+Piece.prototype.getColor = function() {
+    for (var r = 0; r < this.dimension; r++) {
+        for (var c = 0; c < this.dimension; c++) {
+            if (this.cells[r][c] != 0) {
+                return this.cells[r][c];
+            }
+        }
+    }
+    return 0; // Fallback (shouldn't happen)
 };
